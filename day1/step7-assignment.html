@@ -5,7 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment</title>
     <script>
-        var cart = {
+       /*  var cart = {
+            title : "My Cart",
+            getCostPrice : function(){
+                return 100
+            },
+            getSellingPrice : function(){
+                var calculateProfit = function(val){
+                    return val * 0.2;
+                }
+                return this.getCostPrice() + calculateProfit(this.getCostPrice());
+            }
+        };
+ */
+
+/*  var cart = {
+            title : "My Cart",
+            getCostPrice : function(){
+                return 100
+            },
+            getSellingPrice : function(){
+                var scope = this;
+                var calculateProfit = function(){
+                    return scope.getCostPrice() * 0.2;
+                }
+                return this.getCostPrice() + calculateProfit();
+            }
+        }; */
+
+        /* var cart = {
             title : "My Cart",
             getCostPrice : function(){
                 return 100
@@ -14,10 +42,48 @@
                 var calculateProfit = function(){
                     return this.getCostPrice() * 0.2;
                 }
+                return this.getCostPrice() + calculateProfit.call(this);
+            }
+        }; */
+        /* var cart = {
+            title : "My Cart",
+            getCostPrice : function(){
+                return 100
+            },
+            getSellingPrice : function(){
+                var calculateProfit = function(){
+                    return this.getCostPrice() * 0.2;
+                }
+                return this.getCostPrice() + calculateProfit.apply(this);
+            }
+        }; */
+       /*  var cart = {
+            title : "My Cart",
+            getCostPrice : function(){
+                return 100
+            },
+            getSellingPrice : function(){
+                var calculateProfit = function(){
+                    return this.getCostPrice() * 0.2;
+                }
+                return this.getCostPrice() + calculateProfit.bind(this)();
+            }
+        }; */
+        var getCostPrice = function(){
+            return 1000;
+        }
+        var cart = {
+            title : "My Cart",
+            getCostPrice : ()=>{
+                return 100
+            },
+            getSellingPrice : () => {
+                var calculateProfit = () => {
+                    return this.getCostPrice() * 0.2;
+                }
                 return this.getCostPrice() + calculateProfit();
             }
         };
-
         console.log(cart.getCostPrice());
         console.log(cart.getSellingPrice());// ???
     </script>
