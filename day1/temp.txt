@@ -1,0 +1,14 @@
+var ironman = Object.create(null);
+       Object.defineProperties(ironman, {
+            title : { value : "Ironman", writable : true, enumerable : true, configurable : true },
+            power : { value : 5, enumerable : true },
+            accessTitle : { get : function(){
+                return this.title;
+            }, set : function(ntitle){
+                this.title = ntitle;
+            }}
+            }
+        );
+        console.log(ironman.title);// Ironman
+        ironman.accessTitle = "Ironmonger"; // set
+        console.log(ironman.accessTitle);// get
