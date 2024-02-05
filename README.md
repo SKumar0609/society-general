@@ -2,6 +2,11 @@
 society general training files
 
 # links
-caniuse.com
-developer.mozilla.org
-jsperf.app
+<ul>
+  <li>caniuse.com</li>
+  <li>developer.mozilla.org</li>
+  <li>jsperf.app</li>
+</ul>
+
+
+
