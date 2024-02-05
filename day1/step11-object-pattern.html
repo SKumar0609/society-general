@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Pattern</title>
+    <script>
+        /*         
+        var obj1 = {};
+        var obj2 = new Object();
+        var obj3 = Object.create(null);
+
+        console.log(typeof obj1);
+        console.log(typeof obj2);
+        console.log(typeof obj3);
+        console.log(typeof "obj1"); 
+        */
+       /* 
+       var ironman = {
+           title : "Ironman",
+           power : 5
+        };
+        
+        console.log(ironman.title);
+        ironman.title = "Ironmonger";
+        
+        console.log(ironman.title);
+       */
+        var person = Object.create(null);
+        Object.defineProperty(person,"canwalk", { value : true });
+        Object.defineProperty(person,"avenger", { value : {
+            releasedate : "05/02/2025",
+            ticketprice : 10001
+        } });
+
+        var ironman = Object.create(person);
+        /* 
+        Object.defineProperty(ironman,"title",{ value : "Ironman", writable : true });
+        Object.defineProperty(ironman,"power",{ value : 5 }); 
+        */
+        Object.defineProperties(ironman, {
+            title : { value : "Ironman", writable : true, enumerable : true, configurable : true },
+            power : { value : 5, enumerable : true }
+            }
+        );
+        // console.log(ironman.title);
+        // console.log(ironman.power);
+        // console.log(ironman.title);// ironman
+        console.log(ironman.title);
+        ironman.title = "Ironmonger";
+        for(let prop in ironman){
+            console.log(prop, ":", ironman[prop]);
+        } 
+        Object.defineProperty(ironman, "title", { writable : false, enumerable : false})
+        console.log("###############");
+        ironman.power = 0;
+        ironman.title = "Ironman";
+        console.log(ironman.title);
+        // console.log(ironman.power);
+        // console.log(ironman.canwalk);
+        // console.log(ironman.avenger.releasedate);
+
+        /* 
+        var hero = {
+           title : "Captain America",
+           power : 6,
+           city : "New York"
+        };
+
+        for(let prop in hero){
+            console.log(prop, ":", hero[prop]);
+        } 
+        */
+       for(let prop in ironman){
+           console.log(prop, ":", ironman[prop]);
+       } 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
