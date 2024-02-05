@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function fun1BodyOnLoad(){
+            document.getElementById("log").innerHTML += "Changed By body onload<br/>";
+        };
+        function fun2WindowOnLoad(){
+            document.getElementById("log").innerHTML += "Changed By window onload<br/>";
+        };
+        function fun3DocumentOnLoad(){
+            document.getElementById("log").innerHTML += "Changed By document onload<br/>";
+        };
+        window.addEventListener("load",fun2WindowOnLoad);
+        document.addEventListener("DOMContentLoaded", fun3DocumentOnLoad);
+    </script>
+</head>
+<body onload="fun1BodyOnLoad()">
+    <h1 id="log"></h1>
+</body>
+</html>
