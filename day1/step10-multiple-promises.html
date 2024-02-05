@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Promies</title>
+    <script>
+        let firstPromise = function(){
+            return new Promise(function(resolve, reject){
+                setTimeout(function(){
+                    if(false){
+                        resolve("First Promise was Resolved");
+                    }else{
+                        reject("First Promise was Rejected")
+                    }
+                },1000)
+            })
+        };
+
+        let secondPromise = function(){
+            return new Promise(function(resolve, reject){
+                setTimeout(function(){
+                    if(false){
+                        resolve("Second Promise was Resolved");
+                    }else{
+                        reject("Second Promise was Rejected")
+                    }
+                },2000)
+            })
+        };
+
+        let thirdPromise = function(){
+            return new Promise(function(resolve, reject){
+                setTimeout(function(){
+                    if(true){
+                        resolve("Third Promise was Resolved");
+                    }else{
+                        reject("Third Promise was Rejected")
+                    }
+                },4000)
+            })
+        };
+
+        Promise.all([firstPromise(), secondPromise(),thirdPromise()])
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+        .finally(()=> console.log("Finally was called"))
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

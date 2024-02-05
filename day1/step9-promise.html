@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+    <script>
+       /*   
+        setTimeout(function(){
+            console.log("timeout was called")
+        },2000); 
+        */
+        let promise = new Promise(function(resolve, reject){
+           setTimeout(function(){
+            if(true){
+                resolve({
+                title : "Ironman",
+                power : 5,
+                firstname : "Tony",
+                lastname : "Stark",
+                city : "New York",
+                movies : [
+                    {
+                        name : "firstmovie",
+                        title : "Ironman part1"
+                    },
+                    {
+                        name : "secondmovie",
+                        title : "Ironman part2"
+                    }
+                ]
+        });
+            }else{
+                reject("Promise was Rejected");
+            }
+           },2000);
+        });
+
+        /*   
+        promise
+        .then((res)=>{
+            console.log("Then was called ", res )
+        }).catch((err)=>{
+            console.log("Catch was called ", err )
+        }).finally(()=>{
+            console.log("Finally was called")
+        }); 
+        */
+
+        promise.then((res)=>{
+            console.log(res)
+            return res.movies;
+        }).then((res)=>{
+            console.log(res)
+            return res[0]
+        }).then((res)=>{
+            console.log(res)
+        }).catch((error)=>{
+            console.log(error)
+        }).finally(()=>{
+            console.log("finally was called")
+        });
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
