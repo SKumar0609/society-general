@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes</title>
+    <script>
+        class Hero{
+            // public
+            title = "default";
+            power = 0;
+            releaseDate = {}
+
+            // private
+            #firstname = "default first name";
+
+            // constructor
+            constructor(ntitle, npower, nDate){
+                this.title = ntitle;
+                this.power = npower;
+                this.releaseDate = nDate;
+            }
+
+            get accessfirstname(){
+                return this.#firstname;
+            }
+            set accessfirstname(nfirstname){
+                this.#firstname = nfirstname;
+            }
+        };
+        let hero1 = new Hero("Thor",9, new Date());
+        console.log(hero1.title, hero1.power, hero1.releaseDate, hero1.firstname);
+        hero1.accessfirstname = "New Thor"; // setter
+        console.log(hero1.accessfirstname); // getter
+        let hero2 = new Hero("Hulk",8, new Date());
+        console.log(hero2.title, hero2.power, hero2.releaseDate, hero2.firstname);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

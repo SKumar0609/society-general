@@ -26,26 +26,27 @@
         
         console.log(ironman.title);
        */
-        var person = Object.create(null);
+        /* var person = Object.create(null);
         Object.defineProperty(person,"canwalk", { value : true });
         Object.defineProperty(person,"avenger", { value : {
             releasedate : "05/02/2025",
             ticketprice : 10001
         } });
 
-        var ironman = Object.create(person);
+        var ironman = Object.create(person); */
         /* 
         Object.defineProperty(ironman,"title",{ value : "Ironman", writable : true });
         Object.defineProperty(ironman,"power",{ value : 5 }); 
         */
-        Object.defineProperties(ironman, {
+       /*  Object.defineProperties(ironman, {
             title : { value : "Ironman", writable : true, enumerable : true, configurable : true },
             power : { value : 5, enumerable : true }
             }
-        );
+        ); */
         // console.log(ironman.title);
         // console.log(ironman.power);
         // console.log(ironman.title);// ironman
+        /* 
         console.log(ironman.title);
         ironman.title = "Ironmonger";
         for(let prop in ironman){
@@ -55,7 +56,8 @@
         console.log("###############");
         ironman.power = 0;
         ironman.title = "Ironman";
-        console.log(ironman.title);
+        console.log(ironman.title); 
+        */
         // console.log(ironman.power);
         // console.log(ironman.canwalk);
         // console.log(ironman.avenger.releasedate);
@@ -71,9 +73,23 @@
             console.log(prop, ":", hero[prop]);
         } 
         */
-       for(let prop in ironman){
+      /*  for(let prop in ironman){
            console.log(prop, ":", ironman[prop]);
-       } 
+       }  */
+       var ironman = Object.create(null);
+       Object.defineProperties(ironman, {
+            title : { value : "Ironman", writable : true, enumerable : true, configurable : true },
+            power : { value : 5, enumerable : true },
+            accessTitle : { get : function(){
+                return this.title;
+            }, set : function(ntitle){
+                this.title = ntitle;
+            }}
+            }
+        );
+        console.log(ironman.title);// Ironman
+        ironman.accessTitle = "Ironmonger"; // set
+        console.log(ironman.accessTitle);// get
     </script>
 </head>
 <body>
