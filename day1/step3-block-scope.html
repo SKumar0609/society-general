@@ -11,14 +11,23 @@
         };
         // console.log(hero.title);
         // console.log(hero.power);
+        // var, let, const
         function checkpower(){
             if(hero.power > 5){
-                var temptitle = hero.title;
+                let temptitle = hero.title;
                 hero.title = temptitle+" is strong";
             }
+            // console.log(temptitle);// ??? 
         };
         checkpower();
-        console.log(hero.title);
+        //console.log(hero.title);
+        /* 
+        for(let i = 0 ; i <100; i++){
+            console.log(i);
+        };
+        console.log("----------------");
+        console.log(i); 
+        */
     </script>
 </head>
 <body>
