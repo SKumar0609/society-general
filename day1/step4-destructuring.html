@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var hero = {
+            title : "Ironman",
+            power : 5,
+            firstname : "Tony",
+            lastname : "Stark",
+            city : "New York",
+            movies : [
+                {
+                    name : "firstmovie",
+                    title : "Ironman part1"
+                },
+                {
+                    name : "secondmovie",
+                    title : "Ironman part2"
+                }
+            ]
+        };
+        /*         
+        var temphero = hero;
+        temphero.power = 50;
+        console.log(temphero.power);// ??? 50
+        console.log(hero.power);// ??? 50  
+        */
+
+        /* 
+        var herotitle = hero.title;
+        var heropower = hero.power;
+        var herofirstname = hero.firstname;
+        var herolastname = hero.lastname;
+        var herocity = hero.city; 
+        */
+        /* 
+        var herotitle = hero.title, 
+        heropower = hero.power, 
+        herofirstname = hero.firstname, 
+        herolastname = hero.lastname, 
+        herocity = hero.city;  
+        */
+
+        /* 
+        heropower = 50;
+        console.log(heropower);// ??? 50
+        console.log(hero.power);// ??? 5  
+        */
+
+        // destructuring
+        var { 
+            title : herotitle, 
+            power : heropower, 
+            firstname : herofirstname, 
+            lastname : herolastname, 
+            city : herocity
+        } = hero;
+
+        heropower = 50;
+        console.log(heropower);// ??? 5
+        console.log(hero.power);// ??? 5  
+
+        var mycopy = JSON.parse(JSON.stringify(hero));
+
+        mycopy.power = 50;
+        console.log(mycopy.power);// ??? 5
+        console.log(hero.power);// ??? 5  
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
