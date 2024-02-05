@@ -5,11 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Array Methods</title>
     <script>
-        var favNums = [55,7,84,20,76,18,7,3,20,26,23,57,11,4,6,33,66,11];
-        console.log(favNums.length);
+        var favNums = [155,7,84,20,76,18,7,3,20,26,23,57,11,4,6,33,66,11];
+       // console.log(favNums.length);// 18
+       /*  
         for(let i = 0; i < favNums.length; i++){
             console.log(favNums[i])
-        };
+        }; 
+        */
+       // ForEach
+        /* 
+        favNums.forEach(function(val,idx,arr){
+            console.log(val);
+        });
+         */
+        // favNums.forEach( val => console.log(val) );
+
+        // Map
+        /*
+        var doubleFavNums = favNums.map(val => val * 2);
+        console.log(favNums);
+        console.log(doubleFavNums);
+        */
+
+      // Filter
+      /*  
+        var greaterThan25 = favNums.filter(function(val,idx,arr){
+            return val > 25;
+        });
+        console.log(greaterThan25);
+      */
+     // Every
+     var greaterThan100 = favNums.every((val, idx) => {
+        console.log("Every was called for", val, idx);
+        return val > 100
+     });
+     console.log(greaterThan100);
+     
+     // Some
+     var greaterThan10 = favNums.some(val => val > 10);
+     console.log(greaterThan10);
     </script>
 </head>
 <body>
