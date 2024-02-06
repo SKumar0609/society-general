@@ -1,10 +1,20 @@
+npm i prop-types
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 export class Second extends Component{
-    static defaultProps = {
+    /* static defaultProps = {
         title : "Component Title",
         version : 10001,
         power : 100,
+    } */
+    static propTypes = {
+        title : PropTypes.string.isRequired,
+        version : PropTypes.number.isRequired,
+        power : PropTypes.number.isRequired,
     }
     render(){
         return <div style={ { border : "2px solid red", width : "350px", padding : "20px", margin : "10px auto"} }>
@@ -19,3 +29,31 @@ export class Second extends Component{
                 </div>
     }
 }
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+import FirstComp from "./components/first";
+import { Second } from "./components/second";
+
+export let App = () => {
+    return <div>
+                <h1>Welcome to your life</h1>
+                {/*                 
+                <FirstComp title="First Component" />
+                <FirstComp title="Second Component" />
+                <FirstComp title="Third Component" />
+                <FirstComp title="Fourth Component" /> 
+                */}
+                <hr />
+                <Second power={5} version={101} title="First" />
+                <Second power={10} version={202} title="Second"/>
+                {/* <Second power="5" version="202" title="Third" /> */}
+                <Second title="some title" power={7} version={303}  />
+            </div>
+} ; 
+
