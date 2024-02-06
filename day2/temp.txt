@@ -1,16 +1,63 @@
+import { Component } from "react";
+
+export class HeroesList extends Component{
+    state = {
+
+    }
+    render(){
+        return <div>
+            {/* <h2>{ this.props.title }</h2>
+            <h3>Version : { this.props.version }</h3>
+            <h3>Power : { this.props.power }</h3> */}
+            <h2>{ this.props.title }</h2>
+            {/* <ul>
+                <li>{ this.props.list[0]}</li>
+                <li>{ this.props.list[1]}</li>
+                <li>{ this.props.list[2]}</li>
+            </ul> */}
+           {/*  { this.props.list.length < 1 ? "List is Empty" : "Heroes Will be listed" } */}
+           { this.props.list.length < 1 && "List is Empty" }
+            <ul>
+                { this.props.list.map( function(val, idx, arr){
+                    return <li key={idx}>{ val }</li>
+                }) }
+            </ul>
+        </div>
+    }
+}
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+app.jsx
+--------
+
+
+
 import { useState } from "react";
 import { HeroesList } from "./components/herolist";
 
 function App() {
   // console.log(useState());
-  let [values, setValues] = useState({ title : "my app", version : 10, power : 5 });
-
+  // let [values, setValues] = useState({ title : "my app", version : 10, power : 5 });
+  let [lists, setLists] = useState({ 
+    heroes : ["Avengers", "Justice League", "Indic Heroes"],
+    avengers : ["Ironman", "Hulk", "Thor","Black Widow"],
+    justiceleague : ["Batman","Superman","Wonder Women"],
+    indicHeroes : ["Shaktiman"]
+  });
   return <div>
           <h1>App Component</h1>
+          {/* 
           <HeroesList title={values.title} version={values.version} power={values.power}  />
           <button onClick={() => setValues({...values, title : "changed" })}>Change Title</button>
           <button onClick={() => setValues({...values, version : values.version+1 })}>Increase Version</button>
-          <button onClick={() => setValues({...values, power : values.power+1 })}>Increase Power</button>
+          <button onClick={() => setValues({...values, power : values.power+1 })}>Increase Power</button> 
+          */}
+          <HeroesList title={lists.heroes[0]} list={ lists.avengers }/>
+          <HeroesList title={lists.heroes[1]} list={ lists.justiceleague }/>
+          <HeroesList title={lists.heroes[2]} list={ lists.indicHeroes }/>
         </div>
 }
 
