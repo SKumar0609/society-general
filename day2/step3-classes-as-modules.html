@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module">
+        import { Hero } from "./modules/hero.js";
+        
+        let hero1 = new Hero("Thor",9, new Date(), "i can fly");
+        console.log(hero1.title, hero1.power, hero1.releaseDate, hero1.firstname);
+        console.log(Hero.version);
+        console.log(hero1.canwalk);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
