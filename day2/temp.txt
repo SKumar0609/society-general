@@ -1,59 +1,20 @@
-npm i prop-types
+import { useState } from "react";
+import { HeroesList } from "./components/herolist";
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function App() {
+  // console.log(useState());
+  let [values, setValues] = useState({ title : "my app", version : 10, power : 5 });
 
-import { Component } from "react";
-import PropTypes from "prop-types";
-
-export class Second extends Component{
-    /* static defaultProps = {
-        title : "Component Title",
-        version : 10001,
-        power : 100,
-    } */
-    static propTypes = {
-        title : PropTypes.string.isRequired,
-        version : PropTypes.number.isRequired,
-        power : PropTypes.number.isRequired,
-    }
-    render(){
-        return <div style={ { border : "2px solid red", width : "350px", padding : "20px", margin : "10px auto"} }>
-                    {/*                     
-                    <h3>Title : { this.props.title || "Default Title" }</h3>
-                    <h3>Version : { this.props.version || "00" }</h3>
-                    <h3>Power : { this.props.power || "0" }</h3> 
-                    */}
-                    <h3>Title : { this.props.title }</h3>
-                    <h3>Version : { this.props.version }</h3>
-                    <h3>Power : { this.props.power}</h3>
-                </div>
-    }
+  return <div>
+          <h1>App Component</h1>
+          <HeroesList title={values.title} version={values.version} power={values.power}  />
+          <button onClick={() => setValues({...values, title : "changed" })}>Change Title</button>
+          <button onClick={() => setValues({...values, version : values.version+1 })}>Increase Version</button>
+          <button onClick={() => setValues({...values, power : values.power+1 })}>Increase Power</button>
+        </div>
 }
 
+export default App
 
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
-
-import FirstComp from "./components/first";
-import { Second } from "./components/second";
-
-export let App = () => {
-    return <div>
-                <h1>Welcome to your life</h1>
-                {/*                 
-                <FirstComp title="First Component" />
-                <FirstComp title="Second Component" />
-                <FirstComp title="Third Component" />
-                <FirstComp title="Fourth Component" /> 
-                */}
-                <hr />
-                <Second power={5} version={101} title="First" />
-                <Second power={10} version={202} title="Second"/>
-                {/* <Second power="5" version="202" title="Third" /> */}
-                <Second title="some title" power={7} version={303}  />
-            </div>
-} ; 
 
