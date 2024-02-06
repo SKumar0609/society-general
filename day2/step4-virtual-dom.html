@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .box{
+            width: 400px;
+            height: 150px;
+            line-height: 150px;
+            text-align: center;
+            background-color: darkolivegreen;
+            color: antiquewhite;
+            margin: auto;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+    </style>
     <script>
 
        /*  
@@ -24,7 +36,7 @@
 
         let elm = document.createElement("h1");
             elm.textContent = "Welcome to your life";
-
+            elm.setAttribute("class","box");
         function init(){
             document.getElementById("root").appendChild(elm);
         }
