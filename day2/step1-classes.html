@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes</title>
+    <script>
+        class Person{
+            canwalk = "";
+            constructor(ncanwalk){
+                this.canwalk = ncanwalk;
+            }
+        }
+        class Hero extends Person{
+            // public
+            title = "default";
+            power = 0;
+            releaseDate = {};
+            // static
+            static version = 1001;
+            // private
+            #firstname = "default first name";
+            // constructor
+            constructor(ntitle, npower, nDate, ncw){
+                super(ncw);
+                this.title = ntitle;
+                this.power = npower;
+                this.releaseDate = nDate;
+            }
+            // getter
+            get accessfirstname(){
+                return this.#firstname;
+            }
+            // setter
+            set accessfirstname(nfirstname){
+                this.#firstname = nfirstname;
+            }
+        };
+        let hero1 = new Hero("Thor",9, new Date(), "i can fly");
+        console.log(hero1.title, hero1.power, hero1.releaseDate, hero1.firstname);
+        console.log(Hero.version);
+        console.log(hero1.canwalk);
+       
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
