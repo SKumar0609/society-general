@@ -59,6 +59,19 @@ export class TitleTag extends Component{
 }
 
 +++++++++++++++++++++++++++++++++++++++++++++++++
+footer.jsx
+----------
+
+import { Component } from "react";
+
+export class Footer extends Component{
+    render(){
+        return <div style={ {color:"whitesmoke", backgroundColor : 'black', height : "150px" } }>
+                Footer Component
+               </div>
+    }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++
 app.jsx
 ----------
 
