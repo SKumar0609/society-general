@@ -1,24 +1,21 @@
 import { Component } from "react";
 
-class FirstComp extends Component{
-    state = {
-        stateVersion : 10
+export class Second extends Component{
+    static defaultProps = {
+        title : "Component Title",
+        version : 10001,
+        power : 100,
     }
-    version = 0;
     render(){
-        return <div>
-                  <h2>{ this.props.title }</h2>
-                  <h2>State Version : { this.state.stateVersion }</h2>
-                  <h2>Version : { this.version }</h2>
-                  <button onClick={ ()=> { 
-                    // this.version = this.version+1; 
-                    // // this.forceUpdate();
-                    // console.log(this.version);
-                    this.setState({ stateVersion : this.state.stateVersion+1 })
-                } 
-                    }>Click to change the version</button>
-               </div>
+        return <div style={ { border : "2px solid red", width : "350px", padding : "20px", margin : "10px auto"} }>
+                    {/*                     
+                    <h3>Title : { this.props.title || "Default Title" }</h3>
+                    <h3>Version : { this.props.version || "00" }</h3>
+                    <h3>Power : { this.props.power || "0" }</h3> 
+                    */}
+                    <h3>Title : { this.props.title }</h3>
+                    <h3>Version : { this.props.version }</h3>
+                    <h3>Power : { this.props.power}</h3>
+                </div>
     }
 }
-
-export default FirstComp;
