@@ -1,23 +1,32 @@
 import { Component } from "react";
 
-class ClassComp extends Component{
-    render(){
-        return <div style={ {border : "2px solid red", padding : "10px", margin : "10px"} }>
-                    <h2>Class Component</h2>
-                </div>
+class ClassComp extends Component {
+    state = {
+        power : 0
     }
+    /* 
+    constructor(){
+        super();
+        this.increasePower = this.increasePower.bind(this);
+    }
+    increasePower(){
+        // alert("hello ");
+        this.setState({power : this.state.power+1});
+    } 
+    */
+    increasePower = () => {
+        this.setState({power : this.state.power+1});
+    } 
+  render() {
+    return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
+                <h2>Class Component</h2>
+                <hr />
+                <h3>Power : {this.state.power }</h3>
+                {/* <button onClick={()=> this.setState({power : this.state.power + 1})}>Increase Power</button> */}
+                {/* <button onClick={ this.increasePower.bind(this) }>Increase Power</button> */}
+                <button onClick={ this.increasePower }>Increase Power</button>
+           </div>
+  }
 }
 
-export default ClassComp
-
-
-+++++++++++++++++++++++++++++++++++++++++
-
-
-let FunComp = () => {
-    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
-                <h2>Function Component</h2>
-            </div>
-}
-
-export default FunComp;
+export default ClassComp;
