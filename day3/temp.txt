@@ -1,25 +1,19 @@
-import { Component } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-class ClassComp extends Component {
-    state = {
-        users : []
-     }
-    componentDidMount(){
-        axios.get("https://reqres.in/api/users?page=1")
-        .then((res) => {
-            // console.log(res);
-            this.setState({ users : res.data.data });;
-        } )
-        .catch(err => console.log("Error ", err))
-    }
-    render() {
-        return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
-                    <h2>Class Component</h2>
-                    <ul>
-                        { this.state.users.map( val => <li key={val.id} >{val.first_name+" "+val.last_name}</li> ) }
-                    </ul> 
-               </div>
-    }
+let FunComp = () => {
+   let [users, setUsers] = useState([]);
+   useEffect(function(){
+    axios.get("https://reqres.in/api/users?page=2")
+    .then(res => setUsers(res.data.data))
+    .catch(err => console.log("Error ", err))
+   },[]);
+    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
+                <h2>Function Component</h2>
+                <ul>
+                    { users.map( val => <li key={val.id} >{val.first_name+" "+val.last_name}</li> ) }
+                </ul> 
+           </div>
 }
-export default ClassComp;
+
+export default FunComp;
