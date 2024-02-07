@@ -58,3 +58,40 @@ class ClassComp extends Component {
 }
 
 export default ClassComp;
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+import { useState } from "react";
+import ClassComp from "./components/classcomp";
+import FunComp from "./components/funcomp";
+
+let App = ()=>{
+  let [version, setVersion] = useState(0);
+  let [rating, setRating] = useState(0);
+  let [show, setShow] = useState(true);
+  return <div>
+          <h1>Life Cycle</h1>
+          <input type="checkbox" onChange={()=> setShow(!show)}/>
+          <br />
+          <input type="range" onChange={(evt) => setVersion(Number(evt.target.value))} />
+          <br />
+          <input value={rating} min={1} max={5} step={1} type="range" onChange={(evt) => setRating(evt.target.value)} />
+          { 
+          show 
+          ? 
+          <span>
+            <ClassComp rating={rating} version={version}/>
+            <FunComp rating={rating} version={version}/>
+          </span>
+          :
+          "Components hidden"
+        }
+        </div>
+
+
+}
+export default App;
