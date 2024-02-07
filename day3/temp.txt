@@ -19,8 +19,11 @@ class ClassComp extends Component {
     increasePower = () => {
         this.setState({power : this.state.power+1});
     } 
-    setPower = (arg) => {
+    /* setPower = (arg) => {
         this.setState({power : Number(arg)});
+    } */ 
+    setPower = (evt) => {
+        this.setState({power : Number(evt.target.value)});
     } 
     setPowerFromNumber = () => {
         this.setState({power : Number(this.ipRef.current.value)});
@@ -38,7 +41,8 @@ class ClassComp extends Component {
                 <input value={this.state.power} onChange={ (evt) => this.setPower(evt.target.value)  } type="range" />
                 <br/>
                 {/* <input onChange={(evt) => this.setState({ tempval : Number(evt.target.value)})} type="number" /> */}
-                <input ref={this.ipRef} type="number" />
+                {/* <input value={this.state.power} ref={this.ipRef} type="number" /> */}
+                <input value={this.state.power} onChange={ this.setPower } type="range" />
                 <button onClick={ this.setPowerFromNumber }>Set Power From Number Input</button>
            </div>
   }
