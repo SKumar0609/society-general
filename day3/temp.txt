@@ -1,51 +1,22 @@
-import { Component, createRef } from "react";
+import { useRef, useState } from "react";
 
-class ClassComp extends Component {
-    state = {
-        power : 0,
-        tempval : 0
+let FunComp = () => {
+    let [power, setPower] = useState(0);
+    let ipRef = useRef();
+    let clickHandler = () => {
+        setPower(Number(ipRef.current.value))
     }
-    ipRef = createRef();
-    /* 
-    constructor(){
-        super();
-        this.increasePower = this.increasePower.bind(this);
-    }
-    increasePower(){
-        // alert("hello ");
-        this.setState({power : this.state.power+1});
-    } 
-    */
-    increasePower = () => {
-        this.setState({power : this.state.power+1});
-    } 
-    /* setPower = (arg) => {
-        this.setState({power : Number(arg)});
-    } */ 
-    setPower = (evt) => {
-        this.setState({power : Number(evt.target.value)});
-    } 
-    setPowerFromNumber = () => {
-        this.setState({power : Number(this.ipRef.current.value)});
-    } 
-  render() {
-    return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
-                <h2>Class Component</h2>
+    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
+                <h2>Function Component</h2>
                 <hr />
-                <h3>Power : {this.state.power }</h3>
-                <h3>Temp Val : {this.state.tempval }</h3>
-                {/* <button onClick={()=> this.setState({power : this.state.power + 1})}>Increase Power</button> */}
-                {/* <button onClick={ this.increasePower.bind(this) }>Increase Power</button> */}
-                <button onClick={ this.increasePower }>Increase Power</button>
+                <h3>Power : { power }</h3>
+                <button onClick={ ()=> setPower(power+1) }>Increase Power</button>
                 <br />
-                <input value={this.state.power} onChange={ (evt) => this.setPower(evt.target.value)  } type="range" />
-                <br/>
-                {/* <input onChange={(evt) => this.setState({ tempval : Number(evt.target.value)})} type="number" /> */}
-                {/* <input value={this.state.power} ref={this.ipRef} type="number" /> */}
-                <input value={this.state.power} onChange={ this.setPower } type="range" />
-                <button onClick={ this.setPowerFromNumber }>Set Power From Number Input</button>
-           </div>
-  }
+                <input onChange={ (evt) => setPower(Number(evt.target.value))} type="range" />
+                <br />
+                <input ref={ ipRef } type="number" />
+                <button onClick={ clickHandler }>Increase Power</button>
+            </div>
 }
 
-export default ClassComp;
+export default FunComp;
