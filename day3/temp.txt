@@ -1,9 +1,11 @@
-import { Component } from "react";
+import { Component, createRef } from "react";
 
 class ClassComp extends Component {
     state = {
-        power : 0
+        power : 0,
+        tempval : 0
     }
+    ipRef = createRef();
     /* 
     constructor(){
         super();
@@ -17,14 +19,27 @@ class ClassComp extends Component {
     increasePower = () => {
         this.setState({power : this.state.power+1});
     } 
+    setPower = (arg) => {
+        this.setState({power : Number(arg)});
+    } 
+    setPowerFromNumber = () => {
+        this.setState({power : Number(this.ipRef.current.value)});
+    } 
   render() {
     return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
                 <h2>Class Component</h2>
                 <hr />
                 <h3>Power : {this.state.power }</h3>
+                <h3>Temp Val : {this.state.tempval }</h3>
                 {/* <button onClick={()=> this.setState({power : this.state.power + 1})}>Increase Power</button> */}
                 {/* <button onClick={ this.increasePower.bind(this) }>Increase Power</button> */}
                 <button onClick={ this.increasePower }>Increase Power</button>
+                <br />
+                <input onChange={ (evt) => this.setPower(evt.target.value)  } type="range" />
+                <br />
+                {/* <input onChange={(evt) => this.setState({ tempval : Number(evt.target.value)})} type="number" /> */}
+                <input ref={this.ipRef} type="number" />
+                <button onClick={ this.setPowerFromNumber }>Set Power From Number Input</button>
            </div>
   }
 }
