@@ -1,67 +1,33 @@
-import { Component } from "react";
+import { useEffect } from "react";
 
-class ClassComp extends Component {
-    state = {
-        title : "compvals",
-        rating : 1,
-        version : 5
+let FunComp = ({ version, rating }) => {
+   useEffect(function(){
+    // will be called when the component is mounted
+    console.log("FunComp was mounted");
+    return function(){
+        // will be called when the component is unmounted
+        console.log("FunComp was unmounted");
     }
-    log = [];
-    constructor(){
-        super();
-        console.log("ClassComponent's constructor was called");
-        // this.state = { rating : 10, version : 100 }
-    }
-    static getDerivedStateFromProps(props,state){
-        console.log(arguments[1]);
-        console.log("ClassComponent's getDerivedStateFromProps was called")
-        return {
-            rating : props.rating,
-            version : props.version + 10
-        }
-    }
-    componentDidMount(){
-        console.log("ClassComponent's componentDidMount was called");
-        // api 
-    }
-    shouldComponentUpdate(){
-        console.log("ClassComponent's shouldComponentUpdate was called");
-        if(this.state.version >= 50){
-            return false
-        }else{
-            return true
-        }
-    }
-    getSnapshotBeforeUpdate(props, state){
-        console.log("ClassComponent's getSnapshotBeforeUpdate was called");
-        this.log.push({ oldpropval : props, oldstatevalue : state, time : new Date() });
-        console.log(this.log);
-        return true
-    }
-    componentDidUpdate(){
-        console.log("ClassComponent's componentDidUpdate was called");
-    }
-    componentWillUnmount(){
-        console.log("ClassComponent's componentWillUnmount was called");
-        // unsubscribe from api calls
-    }
-    render() {
-        console.log("ClassComponent's render was called")
-        return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
-                    <h2>Class Component</h2>
-                    <h3>Parent Version : { this.props.version }</h3>
-                    <h3>Parent Rating : { this.props.rating }</h3>
-                    <h3>Component Version : { this.state.version }</h3>
-                    <h3>Component Rating : { this.state.rating }</h3>
-                </div>
-    }
+   },[]);
+
+   useEffect(function(){
+    // will be called when the component is mounted
+    console.log("FunComp received a new version", version);
+    console.log("FunComp received a new rating", rating);
+   });
+
+
+    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
+                <h2>Function Component</h2>
+                <h3>Parent Version : { version }</h3>
+                <h3>Parent Rating : { rating }</h3>
+            </div>
 }
 
-export default ClassComp;
+export default FunComp;
 
 
-
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+################################################################
 
 
 
