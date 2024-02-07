@@ -4,17 +4,31 @@ import ChildClassComp from "./childClassComp";
 class ClassComp extends Component {
     state = {
         power : 0,
-        version : 0
+        version : 0,
+        firstname : "",
+        lastname : ""
+    }
+    powerChangeHandler = (arg)=>{
+        // alert("power change handler was called");
+        this.setState({power : arg})
+    }
+    setFirstName = (arg) => {
+        this.setState({ firstname : arg  })
+    }
+    setLastName = (arg) => {
+        this.setState({ lastname : arg  })
     }
   render() {
     return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
                 <h2>Class Component</h2>
-                <hr />
+                <h3>Power : { this.state.power }</h3>
+                <h3>Full Name : { this.state.firstname+" "+this.state.lastname }</h3>
+                <hr /> 
                 <input value={this.state.power} onChange={(evt)=> this.setState({ power : Number(evt.target.value) })} type="range" />
                 <br />
                 <input value={this.state.version} onChange={(evt)=> this.setState({ version : Number(evt.target.value) })} type="range" />
                 {/* <ChildClassComp version={ this.state.version } power={ this.state.power }/> */}
-                <ChildClassComp {...this.state} />
+                <ChildClassComp setFirstName={this.setFirstName} setLastName={this.setLastName} powerChangeHandler={this.powerChangeHandler} {...this.state} />
             </div>
   }
 }
@@ -23,7 +37,9 @@ export default ClassComp;
 
 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 
 import { Component } from "react";
@@ -37,15 +53,109 @@ class ChildClassComp extends Component {
     let power = this.props.power;
     let version = this.props.version; 
     */
-   let {power, version} = this.props;
-   
+   let {power, version, powerChangeHandler, setFirstName, setLastName} = this.props;
+
     return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
                 <h3>Child Component</h3>
                 <hr />
                 <h4>Power sent from parent : { power }</h4>
                 <h4>Version sent from parent : { version }</h4>
+                <br />
+                First Name : <input type="text" onChange={(evt)=> setFirstName(evt.target.value)} />
+                <br />
+                Last Name : <input type="text" onChange={(evt)=> setLastName(evt.target.value)} />
+                <button onClick={ ()=> powerChangeHandler(10) }>Change Power</button>
             </div>
   }
 }
 
 export default ChildClassComp;
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+######################################################################
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+classComp.jsx
+-----------------
+
+import { Component } from "react";
+import ChildClassComp from "./childClassComp";
+
+class ClassComp extends Component {
+    state = {
+        power : 0,
+        version : 0,
+        firstname : "",
+        lastname : ""
+    }
+    powerChangeHandler = (arg)=>{
+        // alert("power change handler was called");
+        this.setState({power : arg})
+    }
+    setFirstName = (arg) => {
+        this.setState({ firstname : arg  })
+    }
+    setLastName = (arg) => {
+        this.setState({ lastname : arg  })
+    }
+  render() {
+    return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
+                <h2>Class Component</h2>
+                <h3>Power : { this.state.power }</h3>
+                <h3>Full Name : { this.state.firstname+" "+this.state.lastname }</h3>
+                <hr /> 
+                <input value={this.state.power} onChange={(evt)=> this.setState({ power : Number(evt.target.value) })} type="range" />
+                <br />
+                <input value={this.state.version} onChange={(evt)=> this.setState({ version : Number(evt.target.value) })} type="range" />
+                {/* <ChildClassComp version={ this.state.version } power={ this.state.power }/> */}
+                <ChildClassComp setFirstName={this.setFirstName} setLastName={this.setLastName} powerChangeHandler={this.powerChangeHandler} {...this.state} />
+            </div>
+  }
+}
+
+export default ClassComp;
+
+
+
++++++++++++++++++++++++++++++++++++++++++++
+
+childComp.jsx
+--------------
+import { Component } from "react";
+
+class ChildClassComp extends Component {
+    state = {
+        tempfname : "",
+        templname : ""
+    }
+  render() {
+    /*  
+    let power = this.props.power;
+    let version = this.props.version; 
+    */
+   let {power, version, powerChangeHandler, setFirstName, setLastName} = this.props;
+
+    return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
+                <h3>Child Component</h3>
+                <hr />
+                <h4>Power sent from parent : { power }</h4>
+                <h4>Version sent from parent : { version }</h4>
+                <br />
+                First Name : <input type="text" onChange={(evt)=> this.setState({ tempfname : evt.target.value })} />
+                <br />
+                Last Name : <input type="text" onChange={(evt)=> this.setState({ templname : evt.target.value })} />
+                <br />
+                <button onClick={ ()=> {
+                    setFirstName(this.state.tempfname);
+                    setLastName(this.state.templname);
+                } }>Change Names</button>
+                <br />
+                <button onClick={ ()=> powerChangeHandler(10) }>Change Power</button>
+            </div>
+  }
+}
+
+export default ChildClassComp;
+
+
