@@ -1,31 +1,19 @@
-import { Component } from "react";
-import axios from "axios";
+const express = require("express");
+// const mongoose = require("mongoose");
+const cors = require("cors");
+let data = require("./data/mydata.json");
 
-class ClassComp extends Component {
-    state = {
-        users : []
-     }
-    componentDidMount(){
-        axios.get("https://reqres.in/api/users?page=1")
-        .then((res) => {
-            console.log(res);
-            this.setState({ users : res.data.data });;
-        } )
-        .catch(err => console.log("Error ", err))
+const app = express();
+app.use(cors());
+
+app.get("/", function(req, res){
+    // res.send("welcome to express server");
+    res.send(data);
+});
+app.listen(5050,"localhost",function(error){
+    if(error){
+        console.log("Error ", error);
+    }else{
+        console.log("Great... the web server is now running at localhost:5050");
     }
-    render() {
-        return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
-                    <h2  className="display-4">Class Component</h2>
-                    <div>
-                        { this.state.users.map( val => <div className="card" style={ {width : "180px", margin:"20px"} } key={val.id} >
-                            <img style={ {maxWidth : "180px"} } src={val.avatar} className="card-img-top" alt={val.first_name+" "+val.last_name+"'s profile"}/>
-                            <div className="card-body">
-                                <p className="card-text">{val.first_name+" "+val.last_name}</p>
-                                <a href={"mailto:"+val.email}>eMail</a>
-                            </div>
-                        </div> ) }
-                    </div> 
-               </div>
-    }
-}
-export default ClassComp;
+})
