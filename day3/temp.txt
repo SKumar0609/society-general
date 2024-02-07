@@ -1,63 +1,25 @@
-import { useEffect } from "react";
+import { Component } from "react";
+import axios from "axios";
 
-let FunComp = ({ version, rating }) => {
-   useEffect(function(){
-    // will be called when the component is mounted
-    console.log("FunComp was mounted");
-    return function(){
-        // will be called when the component is unmounted
-        console.log("FunComp was unmounted");
+class ClassComp extends Component {
+    state = {
+        users : []
+     }
+    componentDidMount(){
+        axios.get("https://reqres.in/api/users?page=1")
+        .then((res) => {
+            // console.log(res);
+            this.setState({ users : res.data.data });;
+        } )
+        .catch(err => console.log("Error ", err))
     }
-   },[]);
-
-   useEffect(function(){
-    // will be called when the component is mounted
-    console.log("FunComp received a new version", version);
-    console.log("FunComp received a new rating", rating);
-   });
-
-
-    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
-                <h2>Function Component</h2>
-                <h3>Parent Version : { version }</h3>
-                <h3>Parent Rating : { rating }</h3>
-            </div>
+    render() {
+        return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
+                    <h2>Class Component</h2>
+                    <ul>
+                        { this.state.users.map( val => <li key={val.id} >{val.first_name+" "+val.last_name}</li> ) }
+                    </ul> 
+               </div>
+    }
 }
-
-export default FunComp;
-
-
-################################################################
-
-
-
-import { useState } from "react";
-import ClassComp from "./components/classcomp";
-import FunComp from "./components/funcomp";
-
-let App = ()=>{
-  let [version, setVersion] = useState(0);
-  let [rating, setRating] = useState(0);
-  let [show, setShow] = useState(true);
-  return <div>
-          <h1>Life Cycle</h1>
-          <input type="checkbox" onChange={()=> setShow(!show)}/>
-          <br />
-          <input type="range" onChange={(evt) => setVersion(Number(evt.target.value))} />
-          <br />
-          <input value={rating} min={1} max={5} step={1} type="range" onChange={(evt) => setRating(evt.target.value)} />
-          { 
-          show 
-          ? 
-          <span>
-            <ClassComp rating={rating} version={version}/>
-            <FunComp rating={rating} version={version}/>
-          </span>
-          :
-          "Components hidden"
-        }
-        </div>
-
-
-}
-export default App;
+export default ClassComp;
