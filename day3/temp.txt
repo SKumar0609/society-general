@@ -7,11 +7,11 @@ let FunComp = () => {
     
     return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
                 <h2>Function Component</h2>
-                Power : <input type="range" onChange={(evt)=> setPower(Number(evt.target.value))} />
+                Power : <input value={power} type="range" onChange={(evt)=> setPower(Number(evt.target.value))} />
                 <br />
-                Version : <input type="range" onChange={(evt)=> setVersion(Number(evt.target.value))} />
+                Version : <input value={version} type="range" onChange={(evt)=> setVersion(Number(evt.target.value))} />
                 <hr />
-                <ChildFunComp version={version} power={power}/>
+                <ChildFunComp setPower={setPower} setVersion={setVersion} version={version} power={power}/>
             </div>
 }
 
@@ -21,15 +21,18 @@ export default FunComp;
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-let ChildFunComp = ({power, version}) => {
+let ChildFunComp = ({power, version, setPower, setVersion}) => {
     return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
                 <h3>Child Function Component</h3>
                 <hr />
                 <h4>Parent component's power is : {power}</h4>
                 <h4>Parent component's version is : {version}</h4>
+                <br />
+                <input value={power} type="number" onChange={(evt) => setPower(Number(evt.target.value))} />
+                <br />
+                <input value={version} type="number" onChange={(evt) => setVersion(Number(evt.target.value))} />
+                <input value="Change Both" type="button" onClick={() => {setPower(10); setVersion(10)}} />
             </div>
 }
 
 export default ChildFunComp;
-
