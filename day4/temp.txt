@@ -2,11 +2,17 @@ const redux = require("redux");
 const createStore = redux.legacy_createStore;
 // action
 const ADD_HERO = "ADD_HERO";
+const REMOVE_HERO = "REMOVE_HERO";
 
 // action creator
 let addHero = () => {
     return {
         type : ADD_HERO
+    }
+}
+let removeHero = () => {
+    return {
+        type : REMOVE_HERO
     }
 }
 // initial value
@@ -18,17 +24,27 @@ const initialValue = {
 const reducer = (state = initialValue, action) => {
     switch(action.type){
         case ADD_HERO : return { numberOfHeroes : state.numberOfHeroes + 1 }
+        case REMOVE_HERO : return { numberOfHeroes : state.numberOfHeroes - 1 }
         default : return state
     }
 };
 
 const store = createStore(reducer);
 // initial value
-console.log(store.getState());
+console.log("initial value ",store.getState());
 
 store.subscribe(()=>{
     // modified value
-    console.log(store.getState())
+    console.log("after subscription ",store.getState())
 });
 
+store.dispatch( addHero() );
+store.dispatch( addHero() );
+store.dispatch( addHero() );
+store.dispatch( addHero() );
+store.dispatch( removeHero() );
+store.dispatch( addHero() );
+store.dispatch( removeHero() );
+store.dispatch( addHero() );
+store.dispatch( removeHero() );
 store.dispatch( addHero() );
