@@ -1,23 +1,26 @@
-let BatmanComp = () => {
-    return <div>
-                <h1>Batman Component</h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, tempora cumque eligendi fugit ullam ducimus facere vel voluptates perferendis eius, facilis ipsum animi officiis. Mollitia amet non iure dolore fuga!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque quaerat harum aliquam deleniti eum. Harum sed facere sunt non veritatis est doloremque ducimus, iusto, commodi vitae beatae accusamus porro?
-                </p>
-            </div>
-};
-
-export default BatmanComp;
-
-
-
-#######################################333
-
-let HomeComp = () => {
-    return <div>
-                <h1>Home Component</h1>
-           </div>
-};
-
-export default HomeComp;
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomeComp from "./components/home";
+import BatmanComp from "./components/batman";
+import CyborgComp from "./components/cyborg";
+import FlashComp from "./components/flash";
+import SupermanComp from "./components/superman";
+import WonderWomenComp from "./components/wonderwomen";
+import NotFound from "./components/notfound";
+let App = ()=>{
+  return <div className="container">
+          <BrowserRouter>
+            {/* Routing code comes here */}
+            <Routes>
+              <Route path="/" element={<HomeComp/>}/>
+              <Route path="/batman" element={<BatmanComp/>}/>
+              <Route path="/cyborg" element={<CyborgComp/>}/>
+              <Route path="/flash" element={<FlashComp/>}/>
+              <Route path="/superman" element={<SupermanComp/>}/>
+              <Route path="/wonderwomen" element={<WonderWomenComp/>}/>
+              <Route path="/aquaman" element={<BatmanComp/>}/>
+              <Route path="*" element={<NotFound/>}/>
+            </Routes>
+          </BrowserRouter>
+        </div>
+}
+export default App;
