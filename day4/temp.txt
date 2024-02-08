@@ -1,135 +1,66 @@
-server - index.js
----------
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-let data = require("./data/mydata.json");
-let config = require("./config/dbconfig.json");
-
-const app = express();
-app.use(cors());
-
-//----------------------------------------------------------------
-let dburl = config.baseurl.replace("{username}",config.username)
-.replace("{password}",config.password)
-.replace("{cluster}",config.cluster)
-.replace("{userstring}",config.userstring)
-.replace("{dbname}",config.dbname);
-//----------------------------------------------------------------
-// Schema
-let Schema = mongoose.Schema;
-let ObjectId = Schema.ObjectId;
-// ORM
-let User = mongoose.model("User",Schema({
-    id : ObjectId,
-    title : String,
-    firstname : String,
-    lastname : String
-}));
-//----------------------------------------------------------------
-mongoose.connect(dburl)
-.then(()=> console.log("DB connected"))
-.catch((err)=>console.log("Error ", err));
-/* 
-Create
-Read
-Update
-Delete
-*/
-// read 
-setTimeout(function(){
-    // User.find().then(res => console.log(res)).catch(error => console.log("Error", error));
-},1000)
-
-app.get("/", function(req, res){
-    // res.send("welcome to express server");
-    // res.send(data);
-    User.find().then(dbres => res.send(dbres)).catch(error => console.log("Error", error));
-});
-app.listen(5050,"localhost",function(error){
-    if(error){
-        console.log("Error ", error);
-    }else{
-        console.log("Great... the web server is now running at localhost:5050");
-    }
-})
-
-
-\++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-class comp.jsx
---------------
-
-import { Component } from "react";
-import axios from "axios";
-import "../styles/mystyle.css";
-
-class ClassComp extends Component {
-    state = {
-        users : []
-     }
-    componentDidMount(){
-        axios.get("http://localhost:5050/")
-        .then((res) => {
-            // console.log(res.data);
-            this.setState({ users : res.data });;
-        } )
-        .catch(err => console.log("Error ", err))
-    }
-    render() {
-        return <div style={{ border: "2px solid red", padding: "10px", margin: "10px" }}>
-                    <h2  className="display-4 box">Class Component</h2>
-                    <div>
-                        { this.state.users.map( val => <div className="card" style={ { margin:"20px"} } key={val._id} >
-                            <div className="card-body">
-                            <h5 className="card-title">{val.title}</h5>
-                                <p className="card-text">{val.firstname+" "+val.lastname}</p>
-                            </div>
-                        </div> ) }
-                    </div> 
-                    <hr />
-                    <table className="table">
-                    <thead>
-                        <tr>
-                        <th scope="col">Sl#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { this.state.users.map((val, idx)=>{
-                            return <tr key={val._id}>
-                                    <td>{idx+1}</td>
-                                    <td>{ val.title }</td>
-                                    <td>{ val.firstname }</td>
-                                    <td>{ val.lastname }</td>
-                                </tr>
-                        })}
-                    </tbody>
-                    </table>
-               </div>
-    }
-}
-export default ClassComp;
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-fun comp.jsx
--------------------
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+//=======================================
 let FunComp = () => {
    let [users, setUsers] = useState([]);
+   let [nuser, setNUser] = useState({ title : "", firstname : "", lastname : ""})
    useEffect(function(){
+    reload()
+},[]);
+//=======================================
+   let reload = () =>{ 
+    console.log("reload was called");
     axios.get("http://localhost:5050/")
     .then(res => setUsers(res.data))
+    .catch(err => console.log("Error ", err));
+   }
+   //=======================================
+   let sendUserInfo = ()=>{
+    axios.post("http://localhost:5050/",nuser)
+    .then(res => {
+        reload();
+        setNUser({ title : "", firstname : "", lastname : ""})
+        console.log(res.data);
+    })
     .catch(err => console.log("Error ", err))
-   },[]);
+   }
+   //=======================================
+   let editUser = ()=>{
+    //--------------------
+   }
+   let deleteUser = (evt)=>{
+    // axios.delete("http://localhost:5050/delete/");
+    alert(evt.target.getAttribute("data-info"));
+   }
+   //=======================================
     return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
                 <h2  className="display-4">Function Component</h2>
+                <hr />
+                <div className="mb-3">
+                <label htmlFor="usertitle" className="form-label">User Title</label>
+                <input value={nuser.title} onChange={(evt) => setNUser({...nuser, title : evt.target.value })} type="text" className="form-control" id="usertitle" />
+                </div>
+
+                <div className="mb-3">
+                <label htmlFor="fname" className="form-label">First Name</label>
+                <input value={nuser.firstname} type="text" onChange={(evt) => setNUser({...nuser, firstname : evt.target.value })}  className="form-control" id="fname" />
+                </div>
+
+                <div className="mb-3">
+                <label htmlFor="lname" className="form-label">Last Name</label>
+                <input value={nuser.lastname} type="text" onChange={(evt) => setNUser({...nuser, lastname : evt.target.value })}  className="form-control" id="lname" />
+                </div>
+
+                <div className="mb-3">
+                <button onClick={ sendUserInfo } className="btn btn-primary"> Add User </button>
+                </div>
+                <ul>
+                    <li>{ nuser.title }</li>
+                    <li>{ nuser.firstname }</li>
+                    <li>{ nuser.lastname }</li>
+                </ul>
+                <hr />
                 <table className="table">
                     <thead>
                         <tr>
@@ -137,6 +68,8 @@ let FunComp = () => {
                         <th scope="col">Title</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -146,6 +79,8 @@ let FunComp = () => {
                                     <td>{ val.title }</td>
                                     <td>{ val.firstname }</td>
                                     <td>{ val.lastname }</td>
+                                    <td><button onClick={editUser} data-info={val._id} className="btn btn-warning">Edit</button></td>
+                                    <td><button onClick={deleteUser} data-info={val._id} className="btn btn-danger">Delete</button></td>
                                 </tr>
                         })}
                     </tbody>
@@ -154,5 +89,3 @@ let FunComp = () => {
 }
 
 export default FunComp;
-
-
