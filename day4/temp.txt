@@ -67,3 +67,13 @@ let App = ()=>{
         </div>
 }
 export default App;
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+.box{
+    background-color: crimson;
+    color: papayawhip;
+    padding: 2px 10px;
+}
