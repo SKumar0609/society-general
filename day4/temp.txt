@@ -1,34 +1,21 @@
-import { useParams } from "react-router-dom";
-
-let WonderWomenComp = () => {
-    let params = useParams();
-    return <div>
-                <h1>WonderWomen Component</h1>
-                <h2>Quantity is { params.qty || 0 }</h2>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, tempora cumque eligendi fugit ullam ducimus facere vel voluptates perferendis eius, facilis ipsum animi officiis. Mollitia amet non iure dolore fuga!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque quaerat harum aliquam deleniti eum. Harum sed facere sunt non veritatis est doloremque ducimus, iusto, commodi vitae beatae accusamus porro?
-                </p>
-            </div>
-};
-
-export default WonderWomenComp;
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
+import React, { Suspense } from "react";
 import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
+
 import HomeComp from "./components/home";
 import BatmanComp from "./components/batman";
-import CyborgComp from "./components/cyborg";
-import FlashComp from "./components/flash";
+/* import CyborgComp from "./components/cyborg"; */
+/* import FlashComp from "./components/flash"; */
 import SupermanComp from "./components/superman";
 import WonderWomenComp from "./components/wonderwomen";
 import NotFound from "./components/notfound";
-import "./styles/mystyle.css";
 import MovieOneComp from "./components/movie1";
-import MovieTwoComp from "./components/movie2";
+import MovieTwoComp from "./components/movie2"; 
+
+let FlashComp = React.lazy(()=> import("./components/flash"));
+let CyborgComp = React.lazy(()=> import("./components/cyborg"));
+
 import { useState } from "react";
+import "./styles/mystyle.css";
 
 let App = ()=>{
   let [quantity, setQuantity] = useState(0)
@@ -55,8 +42,8 @@ let App = ()=>{
                 <Route path="/batman/movie1" element={<MovieOneComp/>} />
                 <Route path="/batman/movie2" element={<MovieTwoComp/>} />
               </Route>
-              <Route path="/cyborg" element={<CyborgComp/>}/>
-              <Route path="/flash" element={<FlashComp/>}/>
+              <Route path="/cyborg" element={<Suspense fallback={ <> Waiting... </>}><CyborgComp/></Suspense>}/>
+              <Route path="/flash" element={ <Suspense fallback={<> Loading... </>}><FlashComp/></Suspense> }/>
               <Route path="/superman" element={<SupermanComp/>}/>
               <Route path="/wonderwomen" element={<WonderWomenComp/>}/>
               <Route path="/wonderwomen/:qty" element={<WonderWomenComp/>}/>
@@ -67,13 +54,3 @@ let App = ()=>{
         </div>
 }
 export default App;
-
-
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-.box{
-    background-color: crimson;
-    color: papayawhip;
-    padding: 2px 10px;
-}
