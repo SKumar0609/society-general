@@ -1,101 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
-//=======================================
-let FunComp = () => {
-   let [users, setUsers] = useState([]);
-   let [nuser, setNUser] = useState({ title : "", firstname : "", lastname : ""})
-   useEffect(function(){
-    reload()
-},[]);
-//=======================================
-   let reload = () =>{ 
-    console.log("reload was called");
-    axios.get("http://localhost:5050/")
-    .then(res => setUsers(res.data))
-    .catch(err => console.log("Error ", err));
-   }
-   //=======================================
-   let sendUserInfo = ()=>{
-    axios.post("http://localhost:5050/",nuser)
-    .then(res => {
-        reload();
-        setNUser({ title : "", firstname : "", lastname : ""})
-        console.log(res.data);
-    })
-    .catch(err => console.log("Error ", err))
-   }
-   //=======================================
-   let editUser = ()=>{
-    //--------------------
-   }
-   let deleteUser = (evt)=>{
-    // axios.delete("http://localhost:5050/delete/");
-    alert(evt.target.getAttribute("data-info"));
-   }
-   //=======================================
-    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
-                <h2  className="display-4">Function Component</h2>
-                <hr />
-                <div className="mb-3">
-                <label htmlFor="usertitle" className="form-label">User Title</label>
-                <input value={nuser.title} onChange={(evt) => setNUser({...nuser, title : evt.target.value })} type="text" className="form-control" id="usertitle" />
-                </div>
-
-                <div className="mb-3">
-                <label htmlFor="fname" className="form-label">First Name</label>
-                <input value={nuser.firstname} type="text" onChange={(evt) => setNUser({...nuser, firstname : evt.target.value })}  className="form-control" id="fname" />
-                </div>
-
-                <div className="mb-3">
-                <label htmlFor="lname" className="form-label">Last Name</label>
-                <input value={nuser.lastname} type="text" onChange={(evt) => setNUser({...nuser, lastname : evt.target.value })}  className="form-control" id="lname" />
-                </div>
-
-                <div className="mb-3">
-                <button onClick={ sendUserInfo } className="btn btn-primary"> Add User </button>
-                </div>
-                <ul>
-                    <li>{ nuser.title }</li>
-                    <li>{ nuser.firstname }</li>
-                    <li>{ nuser.lastname }</li>
-                </ul>
-                <hr />
-                <table className="table">
-                    <thead>
-                        <tr>
-                        <th scope="col">Sl#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {  users.map((val, idx)=>{
-                            return <tr key={val._id}>
-                                    <td>{idx+1}</td>
-                                    <td>{ val.title }</td>
-                                    <td>{ val.firstname }</td>
-                                    <td>{ val.lastname }</td>
-                                    <td><button onClick={editUser} data-info={val._id} className="btn btn-warning">Edit</button></td>
-                                    <td><button onClick={deleteUser} data-info={val._id} className="btn btn-danger">Delete</button></td>
-                                </tr>
-                        })}
-                    </tbody>
-                    </table>
-           </div>
-}
-
-export default FunComp;
-
-
-
-#########################################################################################
-
-
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -156,6 +58,31 @@ app.post("/", function(req, res){
         console.log("record inserted")
     }).catch(error => console.log("Error ", error))   
 });
+
+app.delete("/delete/:uid", function(req, res){
+    // console.log(req.params['uid']);
+    User.findByIdAndDelete(req.params['uid'])
+    .then(dbres =>  res.send({"message" : dbres.title+" was deleted"}))
+    .catch(error => console.log("Error ", error))
+});
+
+app.get("/edit/:uid", function(req, res){
+    // console.log(req.params['uid'])
+    // console.log(req.params.uid);
+    User.findById(req.params.uid)
+    .then(dbres => res.send(dbres))
+    .catch( error => console.log("Error ", error))
+})
+app.post("/edit/:uid", function(req, res){
+    User.findByIdAndUpdate(req.params.uid, {
+        title : req.body.title,
+        firstname : req.body.firstname,
+        lastname : req.body.lastname
+    })
+    .then(dbres => res.send(dbres))
+    .catch( error => console.log("Error ", error))
+})
+
 app.listen(5050,"localhost",function(error){
     if(error){
         console.log("Error ", error);
@@ -163,3 +90,145 @@ app.listen(5050,"localhost",function(error){
         console.log("Great... the web server is now running at localhost:5050");
     }
 })
+
+#########################################################################################
+
+
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+//=======================================
+let FunComp = () => {
+   let [users, setUsers] = useState([]);
+   let [show, setShow] = useState(false);
+   let [nuser, setNUser] = useState({ title : "", firstname : "", lastname : ""})
+   let [euser, setEUser] = useState({title : "", firstname : "", lastname : ""})
+   useEffect(function(){
+        reload()
+   },[]);
+//=======================================
+   let reload = () =>{ 
+    console.log("reload was called");
+    axios.get("http://localhost:5050/")
+    .then(res => setUsers(res.data))
+    .catch(err => console.log("Error ", err));
+   }
+   //=======================================
+   let sendUserInfo = ()=>{
+    axios.post("http://localhost:5050/",nuser)
+    .then(res => {
+        reload();
+        setNUser({ title : "", firstname : "", lastname : ""})
+        console.log(res.data);
+    })
+    .catch(err => console.log("Error ", err))
+   }
+   //=======================================
+   let editUser = (evt)=>{
+    axios.get("http://localhost:5050/edit/"+evt.target.getAttribute("data-info"))
+    .then(res =>  {
+        setEUser(res.data);
+        setShow(!show);
+    })
+    .catch(error => console.log("Error",error));
+   }
+   let deleteUser = (evt)=>{
+       // alert(evt.target.getAttribute("data-info"));
+       axios.delete("http://localhost:5050/delete/"+evt.target.getAttribute("data-info"))
+       .then(res => {
+        reload();
+        console.log(res.data);
+    })
+    .catch(err => console.log("Error ", err));
+   }
+   //=======================================
+   let updateUserInfo = () =>{
+    axios.post("http://localhost:5050/edit/"+euser._id, euser)
+    .then(res => {
+        reload();
+        setShow(!show);
+        setEUser({ title : "", firstname : "", lastname : ""})
+        console.log(res.data);
+    })
+    .catch(err => console.log("Error ", err))
+   }
+   //=======================================
+    return <div style={ {border : "2px solid darkseagreen", padding : "10px", margin : "10px"} }>
+                <h2  className="display-4">Function Component</h2>
+                <hr />
+                {/* New User Form */}
+                {
+                    !show &&                 <div id="newUser">
+                    <h2>Add New User</h2>
+                    <div className="mb-3">
+                    <label htmlFor="usertitle" className="form-label">User Title</label>
+                    <input value={nuser.title} onChange={(evt) => setNUser({...nuser, title : evt.target.value })} type="text" className="form-control" id="usertitle" />
+                    </div>
+    
+                    <div className="mb-3">
+                    <label htmlFor="fname" className="form-label">First Name</label>
+                    <input value={nuser.firstname} type="text" onChange={(evt) => setNUser({...nuser, firstname : evt.target.value })}  className="form-control" id="fname" />
+                    </div>
+    
+                    <div className="mb-3">
+                    <label htmlFor="lname" className="form-label">Last Name</label>
+                    <input value={nuser.lastname} type="text" onChange={(evt) => setNUser({...nuser, lastname : evt.target.value })}  className="form-control" id="lname" />
+                    </div>
+    
+                    <div className="mb-3">
+                    <button onClick={ sendUserInfo } className="btn btn-primary"> Add User </button>
+                    </div>
+                    </div>
+                }
+                {/* Edit User Form */}
+                { show && <div id="editUser">
+                <h2>Edit User</h2>
+                <div className="mb-3">
+                <label htmlFor="usertitle" className="form-label">User Title</label>
+                <input value={euser.title} onChange={(evt) => setEUser({...euser, title : evt.target.value })} type="text" className="form-control" id="usertitle" />
+                </div>
+
+                <div className="mb-3">
+                <label htmlFor="fname" className="form-label">First Name</label>
+                <input value={euser.firstname} type="text" onChange={(evt) => setEUser({...euser, firstname : evt.target.value })}  className="form-control" id="fname" />
+                </div>
+
+                <div className="mb-3">
+                <label htmlFor="lname" className="form-label">Last Name</label>
+                <input value={euser.lastname} type="text" onChange={(evt) => setEUser({...euser, lastname : evt.target.value })}  className="form-control" id="lname" />
+                </div>
+
+                <div className="mb-3">
+                <button onClick={ updateUserInfo } className="btn btn-primary"> Update User </button>
+                </div>
+                </div>}
+                <hr />
+                <table className="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Sl#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {  users.map((val, idx)=>{
+                            return <tr key={val._id}>
+                                    <td>{idx+1}</td>
+                                    <td>{ val.title }</td>
+                                    <td>{ val.firstname }</td>
+                                    <td>{ val.lastname }</td>
+                                    <td><button onClick={editUser} data-info={val._id} className="btn btn-warning">Edit</button></td>
+                                    <td><button onClick={deleteUser} data-info={val._id} className="btn btn-danger">Delete</button></td>
+                                </tr>
+                        })}
+                    </tbody>
+                    </table>
+           </div>
+}
+
+export default FunComp;
