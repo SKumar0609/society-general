@@ -1,9 +1,3 @@
-import React from "react";
-
-export let FamilyContext = React.createContext();
-
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 import { useContext } from "react";
 import { FamilyContext } from "../contexts/familyContext";
 
@@ -20,29 +14,57 @@ let ChildComp = () => {
 
 export default ChildComp;
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+########################################
+
+import { useContext } from "react";
+import { FamilyContext } from "../contexts/familyContext";
+import { MessageContext } from "../contexts/messageContext";
+
+let CousinComp = () => {
+    let val = useContext(FamilyContext);
+    let msg = useContext(MessageContext);
+    return <div style={ {border : "2px solid red", padding:"10px", margin:"10px"} }>
+                <h1>Cousin Component</h1>
+                <hr />
+                <h2>Power is { val.power }</h2>
+                <h2>Version is { val.version }</h2>
+                <h2>Message is { msg }</h2>
+           </div>
+};
+
+export default CousinComp;
+
+########################################
 
 import { useState } from "react";
 import ParentComp from "./parent";
 import { FamilyContext } from "../contexts/familyContext";
+import CousinComp from "./cousin";
+import { MessageContext } from "../contexts/messageContext";
 
 let GrandComp = () => {
-    let [power, setPower] = useState(0)
-    let [version, setVersion] = useState(0)
+    let [power, setPower] = useState(0);
+    let [version, setVersion] = useState(0);
+    let [message, setMessage] = useState("default");
     return <div style={ {border : "2px solid red", padding:"10px", margin:"10px"} }>
                 <h1>Grand Parent Component ~ Power is {power} ~ Version is { version }</h1>
+                <h2>Message is : { message }</h2>
                 <input type="range" onChange={(evt)=> setPower(Number(evt.target.value))} />
                 <input type="range" onChange={(evt)=> setVersion(Number(evt.target.value))} />
+                <input type="text" onChange={(evt)=> setMessage(evt.target.value)} />
                 <hr />
                 <FamilyContext.Provider value={{ power, version }}>
                     <ParentComp/>
+                    <MessageContext.Provider value={message}>
+                        <CousinComp/>
+                    </MessageContext.Provider>
                 </FamilyContext.Provider>
            </div>
 };
 
 export default GrandComp;
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+########################################
 
 import ChildComp from "./child";
 
@@ -56,8 +78,27 @@ let ParentComp = () => {
 
 export default ParentComp;
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+########################################
+
+import React from "react";
+
+export let FamilyContext = React.createContext();
 
 
+########################################
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import React from "react";
+
+export let MessageContext = React.createContext();
+
+
+########################################
+
+import GrandComp from "./components/grand";
+
+let App = ()=>{
+  return <div className="container">
+          <GrandComp/>
+        </div>
+}
+export default App;
