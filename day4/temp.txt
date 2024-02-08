@@ -1,0 +1,43 @@
+dbconfig.json
+-----------
+
+  {
+    "username" : "",
+    "password" : "",
+    "cluster" : "",
+    "userstring" : "",
+    "dbname" : ""
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+index.js
+---------
+
+  const express = require("express");
+// const mongoose = require("mongoose");
+const cors = require("cors");
+let data = require("./data/mydata.json");
+let config = require("./config/dbconfig.json");
+
+const app = express();
+app.use(cors());
+
+let urlstring = 'mongodb+srv://{username}:{password}@{cluster}.{userstring}.mongodb.net/{dbname}?retryWrites=true&w=majority';
+let dburl = urlstring.replace("{username}",config.username)
+                    .replace("{password}",config.password)
+                    .replace("{cluster}",config.cluster)
+                    .replace("{userstring}",config.userstring)
+                    .replace("{dbname}",config.dbname);
+console.log(dburl)
+
+app.get("/", function(req, res){
+    // res.send("welcome to express server");
+    // res.send(data);
+});
+app.listen(5050,"localhost",function(error){
+    if(error){
+        console.log("Error ", error);
+    }else{
+        console.log("Great... the web server is now running at localhost:5050");
+    }
+})
