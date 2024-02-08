@@ -89,3 +89,77 @@ let FunComp = () => {
 }
 
 export default FunComp;
+
+
+
+#########################################################################################
+
+
+
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+let data = require("./data/mydata.json");
+let config = require("./config/dbconfig.json");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+//----------------------------------------------------------------
+let dburl = config.baseurl.replace("{username}",config.username)
+.replace("{password}",config.password)
+.replace("{cluster}",config.cluster)
+.replace("{userstring}",config.userstring)
+.replace("{dbname}",config.dbname);
+//----------------------------------------------------------------
+// Schema
+let Schema = mongoose.Schema;
+let ObjectId = Schema.ObjectId;
+// ORM
+let User = mongoose.model("User",Schema({
+    id : ObjectId,
+    title : String,
+    firstname : String,
+    lastname : String
+}));
+
+
+//----------------------------------------------------------------
+mongoose.connect(dburl)
+.then(()=> console.log("DB connected"))
+.catch((err)=>console.log("Error ", err));
+/* 
+Create
+Read
+Update
+Delete
+*/
+// read 
+setTimeout(function(){
+    // User.find().then(res => console.log(res)).catch(error => console.log("Error", error));
+   /*  let user = new User({
+        title : "Hulk",
+        firstname : "Bruce",
+        lastname : "Benner"
+    });
+    user.save().then(dbres => console.log("DB Res", dbres)).catch(error => console.log("Error ", error)) */
+},1000)
+
+app.get("/", function(req, res){
+    User.find().then(dbres => res.send(dbres)).catch(error => console.log("Error", error));
+});
+app.post("/", function(req, res){
+    let user = new User(req.body);
+    user.save().then(dbres => {
+        res.send({"message" : dbres.title+" was added"});
+        console.log("record inserted")
+    }).catch(error => console.log("Error ", error))   
+});
+app.listen(5050,"localhost",function(error){
+    if(error){
+        console.log("Error ", error);
+    }else{
+        console.log("Great... the web server is now running at localhost:5050");
+    }
+})
