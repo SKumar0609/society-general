@@ -1,3 +1,22 @@
+import { useParams } from "react-router-dom";
+
+let WonderWomenComp = () => {
+    let params = useParams();
+    return <div>
+                <h1>WonderWomen Component</h1>
+                <h2>Quantity is { params.qty || 0 }</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, tempora cumque eligendi fugit ullam ducimus facere vel voluptates perferendis eius, facilis ipsum animi officiis. Mollitia amet non iure dolore fuga!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto atque quaerat harum aliquam deleniti eum. Harum sed facere sunt non veritatis est doloremque ducimus, iusto, commodi vitae beatae accusamus porro?
+                </p>
+            </div>
+};
+
+export default WonderWomenComp;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
 import HomeComp from "./components/home";
 import BatmanComp from "./components/batman";
@@ -7,28 +26,40 @@ import SupermanComp from "./components/superman";
 import WonderWomenComp from "./components/wonderwomen";
 import NotFound from "./components/notfound";
 import "./styles/mystyle.css";
+import MovieOneComp from "./components/movie1";
+import MovieTwoComp from "./components/movie2";
+import { useState } from "react";
 
 let App = ()=>{
+  let [quantity, setQuantity] = useState(0)
   return <div className="container">
+          { quantity }&nbsp;&nbsp;
+        <input onChange={(evt)=> setQuantity(Number(evt.target.value)) } type="number" />
           <BrowserRouter>
             {/* Routing code comes here */}
             <ul className="nav">
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/"}>Home</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/batman"}>Batman</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/batman/movie1"}>Batman Movie 1</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/batman/movie2"}>Batman Movie 2</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/superman"}>Superman</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/cyborg"}>Cyborg</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/flash"}>Flash</NavLink></li>
-              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/wonderwomen"}>Wonder Women</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/wonderwomen/"+quantity}>Wonder Women</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/aquaman"}>Aquaman</NavLink></li>
               <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/hulk"}>Hulk</NavLink></li>
             </ul>
             <Routes>
               <Route path="/" element={<HomeComp/>}/>
-              <Route path="/batman" element={<BatmanComp/>}/>
+              <Route path="/batman" element={<BatmanComp/>}>
+                <Route path="/batman/movie1" element={<MovieOneComp/>} />
+                <Route path="/batman/movie2" element={<MovieTwoComp/>} />
+              </Route>
               <Route path="/cyborg" element={<CyborgComp/>}/>
               <Route path="/flash" element={<FlashComp/>}/>
               <Route path="/superman" element={<SupermanComp/>}/>
               <Route path="/wonderwomen" element={<WonderWomenComp/>}/>
+              <Route path="/wonderwomen/:qty" element={<WonderWomenComp/>}/>
               <Route path="/aquaman" element={<BatmanComp/>}/>
               <Route path="*" element={<NotFound/>}/>
             </Routes>
