@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
 import HomeComp from "./components/home";
 import BatmanComp from "./components/batman";
 import CyborgComp from "./components/cyborg";
@@ -6,26 +6,21 @@ import FlashComp from "./components/flash";
 import SupermanComp from "./components/superman";
 import WonderWomenComp from "./components/wonderwomen";
 import NotFound from "./components/notfound";
+import "./styles/mystyle.css";
+
 let App = ()=>{
   return <div className="container">
           <BrowserRouter>
             {/* Routing code comes here */}
-            {/* <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/batman">Batman</a></li>
-              <li><a href="/superman">Superman</a></li>
-              <li><a href="/cyborg">Cyborg</a></li>
-            </ul> */}
             <ul className="nav">
-              <li className="nav-item"><Link className="nav-link" to={"/"}>Home</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/batman"}>Batman</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/superman"}>Superman</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/cyborg"}>Cyborg</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/flash"}>Flash</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/superman"}>Superman</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/wonderwomen"}>Wonder Women</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/aquaman"}>Aquaman</Link></li>
-              <li className="nav-item"><Link className="nav-link" to={"/hulk"}>Hulk</Link></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/"}>Home</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/batman"}>Batman</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/superman"}>Superman</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/cyborg"}>Cyborg</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/flash"}>Flash</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/wonderwomen"}>Wonder Women</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/aquaman"}>Aquaman</NavLink></li>
+              <li className="nav-item"><NavLink className={ ({isActive}) => isActive ? 'nav-link box' : 'nav-link' } to={"/hulk"}>Hulk</NavLink></li>
             </ul>
             <Routes>
               <Route path="/" element={<HomeComp/>}/>
